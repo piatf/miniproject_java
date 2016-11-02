@@ -8,7 +8,7 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="File"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Curseur par d&#xe9;faut"/>
+              <Color id="Default Cursor"/>
             </Property>
           </Properties>
           <Events>
@@ -26,15 +26,15 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Shift+Ctrl+N"/>
+                  <KeyStroke key="Ctrl+N"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="import pdf"/>
+                <Property name="text" type="java.lang.String" value="import PDF"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem6ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -118,7 +118,7 @@
     <Component class="java.awt.Label" name="label1">
       <Properties>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-          <Color id="Curseur par d&#xe9;faut"/>
+          <Color id="Default Cursor"/>
         </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="24" style="1"/>
@@ -160,21 +160,27 @@
         <Component class="javax.swing.JTable" name="jTable1">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="10" rowCount="29">
+              <Table columnCount="11" rowCount="29">
                 <Column editable="true" title="Collection" type="java.lang.String"/>
                 <Column editable="true" title="Titre" type="java.lang.String"/>
                 <Column editable="true" title="Auteur" type="java.lang.String"/>
                 <Column editable="true" title="Journal" type="java.lang.String"/>
-                <Column editable="true" title="Ann&#xe9;e" type="java.lang.Integer"/>
-                <Column editable="true" title="Volume" type="java.lang.Integer"/>
-                <Column editable="true" title="Nombre" type="java.lang.Integer"/>
+                <Column editable="true" title="Ann&#xe9;e" type="java.lang.String"/>
+                <Column editable="true" title="Volume" type="java.lang.String"/>
+                <Column editable="true" title="Nombre" type="java.lang.String"/>
                 <Column editable="true" title="mois" type="java.lang.String"/>
                 <Column editable="true" title="Resume" type="java.lang.String"/>
                 <Column editable="true" title="motcle" type="java.lang.String"/>
+                <Column editable="true" title="Tags" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-              <TableColumnModel selectionModel="0">
+              <TableColumnModel selectionModel="3">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
@@ -227,10 +233,14 @@
                 </Column>
               </TableColumnModel>
             </Property>
+            <Property name="columnSelectionAllowed" type="boolean" value="true"/>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="componentAdded" listener="java.awt.event.ContainerListener" parameters="java.awt.event.ContainerEvent" handler="jTable1ComponentAdded"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
