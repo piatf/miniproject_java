@@ -143,7 +143,7 @@ public class MainWindow extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Collection", "Titre", "Auteur", "Journal", "Année", "Volume", "Nombre", "mois", "Resume", "motcle"
+                "Collection", "Titre", "Auteur", "Journal", "Annee", "Volume", "Nombre", "mois", "Resume", "motcle"
             }
         ) {
             Class[] types = new Class [] {
