@@ -5,12 +5,17 @@
  */
 package bibliotheque;
 
+import java.awt.Desktop.Action;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
+import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
@@ -26,6 +31,7 @@ public class MainWindow extends javax.swing.JFrame {
      * Creates new form MainWindow
      */
     public MainWindow() {
+    	
         initComponents();
     }
     /**
@@ -36,6 +42,12 @@ public class MainWindow extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+    	
+    	getContentPane().removeAll();
+
+    	// create locale
+        labels = ResourceBundle.getBundle("resources.Resources", currentLocale);
+
 
         button1 = new java.awt.Button();
         label1 = new java.awt.Label();
@@ -52,64 +64,29 @@ public class MainWindow extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
-
-        JPanel p = new JPanel();
-        p.setLayout(new GridBagLayout());
-        p.setPreferredSize(new Dimension(2000, 2000));
-        p.setMaximumSize(new Dimension(10000, 20000));
-        JPanel p1 = new JPanel();
-        p1.setLayout(new GridBagLayout());
-        p1.setPreferredSize(new Dimension(2000, 5000));
-        p1.setMaximumSize(new Dimension(10000, 20000));
-        JPanel p2 = new JPanel();
-        p2.setLayout(new GridBagLayout());
-        p2.setPreferredSize(new Dimension(2000, 2000));
-        p2.setMaximumSize(new Dimension(10000, 20000));
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        
         
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new GridBagLayout());
         
-        button1.setLabel("Search");
+        //button1.setLabel("Search");
+        button1.setLabel(labels.getString("Search"));
         button1.setMaximumSize(new java.awt.Dimension(55, 24));
         button1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button1ActionPerformed(evt);
             }
         });
-        // Netbeans
-        // Call absolute constraint
         
-        getContentPane().add(button1, new GridBagConstraints(1120, 0, 20, 10, 1.0, 1.0, GridBagConstraints.PAGE_START, GridBagConstraints.HORIZONTAL, new Insets(10,0,0,0), 0, 0));
-        //p.add(button1, new GridBagConstraints(1120, 0, 80, -1, 1.0, 1.0, GridBagConstraints.PAGE_START, GridBagConstraints.HORIZONTAL, new Insets(10,0,0,0), 0, 0));
 
-        //Eclipse
-        //getContentPane().add(button1);
         label1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         label1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         label1.setText("Suggestion:");
         
-        //Netbeans
-        //getContentPane().add(label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 620, 140, 60));
-        getContentPane().add(label1, new GridBagConstraints(10, 620, 140, 60, 1.0, 1.0, GridBagConstraints.PAGE_END, GridBagConstraints.HORIZONTAL, new Insets(10,0,0,0), 0, 0));
-        //p2.add(label1, new GridBagConstraints(10, 620, 140, 60, 1.0, 1.0, GridBagConstraints.PAGE_END, GridBagConstraints.HORIZONTAL, new Insets(10,0,0,0), 0, 0));
-
-        //Eclipse
-        //getContentPane().add(label1);
         
-        //Netbeans
-        //getContentPane().add(textField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 0, 160, 20));
-        getContentPane().add(textField1, new GridBagConstraints(960, 0, 160, 20, 1.0, 1.0, GridBagConstraints.PAGE_START, GridBagConstraints.HORIZONTAL, new Insets(10,0,0,0), 0, 0));
-        //p.add(textField1, new GridBagConstraints(960, 0, 160, 20, 1.0, 1.0, GridBagConstraints.PAGE_START, GridBagConstraints.HORIZONTAL, new Insets(10,0,0,0), 0, 0));
-        //getContentPane().add(textField1);
-        
-        //Netbeans
-        //getContentPane().add(textField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 620, 1050, 60));
-        getContentPane().add(textField2, new GridBagConstraints(300, 620, 1050, 60, 1.0, 1.0, GridBagConstraints.PAGE_END, GridBagConstraints.HORIZONTAL, new Insets(10,0,0,0), 0, 0));
-        //p2.add(textField2, new GridBagConstraints(150, 620, 1050, 60, 1.0, 1.0, GridBagConstraints.PAGE_END, GridBagConstraints.HORIZONTAL, new Insets(10,0,0,0), 0, 0));
-       
-        //Eclipse
-        //getContentPane().add(textField2);
-
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null},
@@ -143,7 +120,7 @@ public class MainWindow extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Collection", "Titre", "Auteur", "Journal", "Annee", "Volume", "Nombre", "mois", "Resume", "motcle"
+            		labels.getString("Collection"), labels.getString("Title"), labels.getString("Author"), labels.getString("Journal"), labels.getString("Year"), labels.getString("Volume"), labels.getString("Number"), labels.getString("Month"), labels.getString("Resume"), labels.getString("Keywords")
             }
         ) {
             Class[] types = new Class [] {
@@ -155,19 +132,16 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        
-        //Netbeans
-        //getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1200, 580));
-        getContentPane().add(jScrollPane1, new GridBagConstraints(0, 30, 1200, 580, 1.0, 1.0, GridBagConstraints.PAGE_END, GridBagConstraints.HORIZONTAL, new Insets(10,0,0,0), 0, 0));
-        //p2.add(jScrollPane1, new GridBagConstraints(0, 30, 1200, 580, 1.0, 1.0, GridBagConstraints.PAGE_START, GridBagConstraints.HORIZONTAL, new Insets(10,0,0,0), 0, 0));
-        //getContentPane().add(p);
-        //getContentPane().add(p1);
 
-        //getContentPane().add(p2);
-        //Eclipse
-        //getContentPane().add(jScrollPane1);
+        getContentPane().add(textField1, new GridBagConstraints(27, 5, 2, 1, 1.0, 1.0, GridBagConstraints.NORTHEAST, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0));
+        getContentPane().add(button1, new GridBagConstraints(29, 5, 1, 1, 1.0, 1.0, GridBagConstraints.NORTHEAST, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0));
+        getContentPane().add(jScrollPane1, new GridBagConstraints(0, 10 , 30, 30, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0));
+        getContentPane().add(label1, new GridBagConstraints(23, 40, 3, 2, 1.0, 1.0, GridBagConstraints.SOUTHEAST, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0));
+        getContentPane().add(textField2, new GridBagConstraints(25, 40, 5, 2, 1.0, 1.0, GridBagConstraints.SOUTHEAST, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0));
+       
 
-        jMenu1.setText("File");
+
+        jMenu1.setText(labels.getString("File"));
         jMenu1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jMenu1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -176,7 +150,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem2.setText("import");
+        jMenuItem2.setText(labels.getString("Import"));
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -185,7 +159,7 @@ public class MainWindow extends javax.swing.JFrame {
         jMenu1.add(jMenuItem2);
 
         jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem6.setText("import pdf");
+        jMenuItem6.setText(labels.getString("Import_PDF"));
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
@@ -195,9 +169,10 @@ public class MainWindow extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText(labels.getString("Edit"));
+      
 
-        jMenuItem3.setText("Delete Item");
+        jMenuItem3.setText(labels.getString("Delete_Item"));
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -205,19 +180,43 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem3);
 
-        jMenuItem4.setText("Delete Collection");
+        jMenuItem4.setText(labels.getString("Delete_Collection"));
         jMenu2.add(jMenuItem4);
 
         jMenuBar1.add(jMenu2);
 
-        jMenu5.setText("About");
+        jMenu5.setText(labels.getString("About"));
 
         jMenuItem5.setText("By INSA CVL 2017 COPYRIGHT");
         jMenu5.add(jMenuItem5);
-
+        
+        jMenu3.setText("Langage");
+        
+        jMenuItem7.setText("English");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        
+        jMenuItem8.setText("French");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        
+        jMenu3.add(jMenuItem7);
+        jMenu3.add(jMenuItem8);
+        
+        	
         jMenuBar1.add(jMenu5);
-
+        
+        jMenuBar1.add(jMenu3);
         setJMenuBar(jMenuBar1);
+        //setSize(1500,1500);
+        //setResizable(false);
+        //setVisible(true);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -235,20 +234,37 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-JFileChooser chooser= new JFileChooser();
-chooser.showOpenDialog(null);
-File f= chooser.getSelectedFile();
-String filename= f.getAbsolutePath();        // TODO add your handling code here:
+    	JFileChooser chooser= new JFileChooser();
+    	chooser.showOpenDialog(null);
+    	File f= chooser.getSelectedFile();
+    	String filename= f.getAbsolutePath();        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+    
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+    	Locale currentLocale1 =  new Locale.Builder().setLanguage("en")
+                .setRegion("EN").build();
+    	currentLocale = currentLocale1;
+    	initComponents();
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+    	Locale currentLocale1 =  new Locale.Builder().setLanguage("fr")
+                .setRegion("FR").build();
+    	currentLocale = currentLocale1;
+    	initComponents();
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
+      
+    	// Set up the locale 
+      
+
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -279,22 +295,29 @@ String filename= f.getAbsolutePath();        // TODO add your handling code here
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button button1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu3;
+
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private java.awt.Label label1;
     private java.awt.TextField textField1;
     private java.awt.TextArea textField2;
     // End of variables declaration//GEN-END:variables
+    private Locale currentLocale = new Locale.Builder().setLanguage("fr").setRegion("FR").build();
+
+    private static ResourceBundle labels;
 }
