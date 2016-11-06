@@ -132,7 +132,8 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-
+        
+        // Set all the items to the panel:
         getContentPane().add(textField1, new GridBagConstraints(27, 5, 2, 1, 1.0, 1.0, GridBagConstraints.NORTHEAST, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0));
         getContentPane().add(button1, new GridBagConstraints(29, 5, 1, 1, 1.0, 1.0, GridBagConstraints.NORTHEAST, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0));
         getContentPane().add(jScrollPane1, new GridBagConstraints(0, 10 , 30, 30, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0));
@@ -140,7 +141,7 @@ public class MainWindow extends javax.swing.JFrame {
         getContentPane().add(textField2, new GridBagConstraints(25, 40, 5, 2, 1.0, 1.0, GridBagConstraints.SOUTHEAST, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0));
        
 
-
+        // Create menu system
         jMenu1.setText(labels.getString("File"));
         jMenu1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jMenu1.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -214,6 +215,7 @@ public class MainWindow extends javax.swing.JFrame {
         
         jMenuBar1.add(jMenu3);
         setJMenuBar(jMenuBar1);
+        
         //setSize(1500,1500);
         //setResizable(false);
         //setVisible(true);
