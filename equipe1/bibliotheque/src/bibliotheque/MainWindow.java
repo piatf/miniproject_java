@@ -18,6 +18,7 @@ import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
@@ -133,11 +134,20 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
         
+        // TRICK : Add empty gridbaglayout components to scaling the interface, for the vertical line:
+        for(int i = 0; i < 30; i++){
+        	getContentPane().add(new JLabel(""), new GridBagConstraints(i, 1, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0));
+        }
+        
+        // TRICK: Add empty gridbaglayout components to scaling the interface, for the horizontal line:
+        for(int i = 0; i < 40; i++){
+        	getContentPane().add(new JLabel(""), new GridBagConstraints(1, i, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0));
+        }
         // Set all the items to the panel:
         getContentPane().add(textField1, new GridBagConstraints(27, 5, 2, 1, 1.0, 1.0, GridBagConstraints.NORTHEAST, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0));
         getContentPane().add(button1, new GridBagConstraints(29, 5, 1, 1, 1.0, 1.0, GridBagConstraints.NORTHEAST, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0));
         getContentPane().add(jScrollPane1, new GridBagConstraints(0, 10 , 30, 30, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0));
-        getContentPane().add(label1, new GridBagConstraints(23, 40, 3, 2, 1.0, 1.0, GridBagConstraints.SOUTHEAST, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0));
+        getContentPane().add(label1, new GridBagConstraints(24, 40, 1, 2, 1.0, 1.0, GridBagConstraints.SOUTHEAST, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0));
         getContentPane().add(textField2, new GridBagConstraints(25, 40, 5, 2, 1.0, 1.0, GridBagConstraints.SOUTHEAST, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0));
        
 
@@ -319,7 +329,7 @@ public class MainWindow extends javax.swing.JFrame {
     private java.awt.TextField textField1;
     private java.awt.TextArea textField2;
     // End of variables declaration//GEN-END:variables
-    private Locale currentLocale = new Locale.Builder().setLanguage("fr").setRegion("FR").build();
+    private Locale currentLocale = new Locale.Builder().setLanguage("en").setRegion("EN").build();
 
     private static ResourceBundle labels;
 }
