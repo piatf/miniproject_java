@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.Iterator;
 
-//initialisation done during the XML file parsing 
-//(get all the tags related to each book/article)
+//initialisation done outside this class
 
 public class tags{ 
-	
 	
 	Hashtable<Integer, ArrayList<String>> tags; 
 	
@@ -29,7 +27,7 @@ public class tags{
 		// TODO: remove the tags associated to the XML document
 	}
 	
-	public void refreshTags(String input, int id)
+	void refreshTags(String input, int id)
 	{
 		String[] alltags;
 		
@@ -45,7 +43,7 @@ public class tags{
 		// for each : addtag
 	}
 
-	public ArrayList<Integer> Booksearch(String search)
+	ArrayList<Integer> Booksearch(String search)
 	{
 		ArrayList<Integer> books_affected;
 		books_affected = new ArrayList<Integer>();
