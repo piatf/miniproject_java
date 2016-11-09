@@ -1,3 +1,5 @@
+package bibliotheque;
+
 import java.awt.Desktop;
 import java.awt.EventQueue;
 
@@ -22,6 +24,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.event.ActionEvent;
@@ -35,22 +39,29 @@ import java.awt.event.MouseEvent;
 * 
 * 
 */
-
 public class Bibliotheque {
-	  private javax.swing.JMenuItem jMenuItem1;
-	    private javax.swing.JMenuItem jMenuItem3;
-	    private javax.swing.JMenuItem jMenuItem4;
-	    private javax.swing.JMenuItem jMenuItem6;
-	    private javax.swing.JPopupMenu jPopupMenu1;
-
+	private javax.swing.JMenuItem jMenuItem1;
+	private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JPopupMenu jPopupMenu1;
+    private JMenuBar menuBar;
+	private JMenu mnFichier;
+	private JMenu mnLanguage;
+	private javax.swing.JMenuItem lang_fr;
+	private javax.swing.JMenuItem lang_en;
+	private javax.swing.JMenuItem mntmImporter;
 	
-
+	private Locale currentLocale = new Locale.Builder().setLanguage("fr").setRegion("FR").build();
+	private static ResourceBundle labels;
+	
+    private JMenu mnAbout;
 	private JFrame frame;
 	private JTextField textField;
 	private JTable table;
 	static String []filename1= new String[300];
 	static String []filenamee= new String[300];
-
+	
 	int li=0;
 
 	/**
@@ -90,6 +101,7 @@ public class Bibliotheque {
 	
 	
 	public Bibliotheque() {
+		frame = new JFrame();
 		initialize();
 	}
 
@@ -97,10 +109,14 @@ public class Bibliotheque {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(0, 0, 1380, 720);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		  jPopupMenu1 = new javax.swing.JPopupMenu();
+			//
+
+			frame.getContentPane().removeAll();
+			labels = ResourceBundle.getBundle("resources.Resources", currentLocale);
+			frame.setBounds(0, 0, 1380, 720);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			
+			jPopupMenu1 = new javax.swing.JPopupMenu();
 	        jMenuItem1 = new javax.swing.JMenuItem();
 	        jMenuItem3 = new javax.swing.JMenuItem();
 	        jMenuItem4 = new javax.swing.JMenuItem();
@@ -109,7 +125,7 @@ public class Bibliotheque {
 	        
 	        
 	        
-	        jMenuItem1.setText("Importer le  PDF");
+	        jMenuItem1.setText(labels.getString("Import_PDF"));
 	        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
 	            public void actionPerformed(java.awt.event.ActionEvent evt) {
 	                jMenuItem1ActionPerformed(evt);
@@ -119,15 +135,15 @@ public class Bibliotheque {
 					
 					JFileChooser chooser= new JFileChooser();
 			        FileNameExtensionFilter filter = new FileNameExtensionFilter("PDF FILES", "pdf", "text");
-			chooser.setFileFilter(filter);
-			chooser.showOpenDialog(null);
-			File f= chooser.getSelectedFile();
-			filename1[li]= f.getAbsolutePath();
-			filenamee[li]=f.getName();
-			if(!filename1[li].equals("")){
+			        chooser.setFileFilter(filter);
+			        chooser.showOpenDialog(null);
+			        File f= chooser.getSelectedFile();
+			        filename1[li]= f.getAbsolutePath();
+			        filenamee[li]=f.getName();
+			        if(!filename1[li].equals("")){
 			    
 			    
-			     JOptionPane.showMessageDialog(null, filenamee[li]+"  a été associé avec succès");
+			     JOptionPane.showMessageDialog(null, filenamee[li]+ labels.getString("Import_PDF_status"));
 			    
 			    
 			    
@@ -139,7 +155,7 @@ public class Bibliotheque {
 	        });
 	        jPopupMenu1.add(jMenuItem1);
 
-	        jMenuItem3.setText("Ouvrir le PDF");
+	        jMenuItem3.setText(labels.getString("Open_PDF"));
 	        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
 	            public void actionPerformed(java.awt.event.ActionEvent evt) {
 	                jMenuItem3ActionPerformed(evt);
@@ -152,7 +168,7 @@ public class Bibliotheque {
 					s=filename1[li];
 					System.out.println(s);
 					        if (s.equals("")){
-					        JOptionPane.showMessageDialog(null, "Vous devez importer un PDF avant d'ouvrir un fichier");
+					        JOptionPane.showMessageDialog(null, labels.getString("Open_PDF_stauts"));
 
 
 					}else{
@@ -173,7 +189,7 @@ public class Bibliotheque {
 	        });
 	        jPopupMenu1.add(jMenuItem3);
 
-	        jMenuItem4.setText("Supprimer le PDF associé");
+	        jMenuItem4.setText(labels.getString("Delete_PDF"));
 	        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
 	            public void actionPerformed(java.awt.event.ActionEvent evt) {
 	                jMenuItem4ActionPerformed(evt);
@@ -183,7 +199,7 @@ public class Bibliotheque {
 					
 					
 					filename1[li]="";
-					JOptionPane.showMessageDialog(null, "le Pdf associé est supprimé avec succès");
+					JOptionPane.showMessageDialog(null, labels.getString("Delete_PDF_status"));
 
 				
 					
@@ -191,7 +207,7 @@ public class Bibliotheque {
 	        });
 	        jPopupMenu1.add(jMenuItem4);
 
-	        jMenuItem6.setText("Supprimer l'élément");
+	        jMenuItem6.setText(labels.getString("Delete_element"));
 	        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
 	            public void actionPerformed(java.awt.event.ActionEvent evt) {
 	                jMenuItem6ActionPerformed(evt);
@@ -202,7 +218,7 @@ public class Bibliotheque {
 					DefaultTableModel model = (DefaultTableModel) table.getModel();
 					model.removeRow(li);
 					filename1[li]="";
-					JOptionPane.showMessageDialog(null, "Elément supprimé avec succès");
+					JOptionPane.showMessageDialog(null, labels.getString("Delete_element_status"));
 					
 					
 										
@@ -212,25 +228,23 @@ public class Bibliotheque {
 
 	        
 	        
-		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
+       menuBar = new JMenuBar();
+       frame.setJMenuBar(menuBar);
 		
-		JMenu mnFichier = new JMenu("Fichier");
-		menuBar.add(mnFichier);
+       mnFichier = new JMenu(labels.getString("File"));
+       menuBar.add(mnFichier);
 		
-		JMenuItem mntmImporter = new JMenuItem("Importer ");
-		mntmImporter.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				
-			      String[] infoo = new String [12]; 
-			        JFileChooser chooser= new JFileChooser();
-			        FileNameExtensionFilter filter = new FileNameExtensionFilter("BIBTEX FILES", "bib", "text");
+       mntmImporter = new JMenuItem(labels.getString("Import"));
+       mntmImporter.addActionListener(new ActionListener() {
+    	   	public void actionPerformed(ActionEvent arg0) {
+			String[] infoo = new String [12]; 
+	        JFileChooser chooser= new JFileChooser();
+	        FileNameExtensionFilter filter = new FileNameExtensionFilter("BIBTEX FILES", "bib", "text");
 			chooser.setFileFilter(filter);
 			chooser.showOpenDialog(null);
 			File f= chooser.getSelectedFile();
 			String filename= f.getAbsolutePath();
-			 filenamee[li]= f.getName();
+  		 filenamee[li]= f.getName();
 
 			//System.out.println(filename);
 			        try {
@@ -242,19 +256,41 @@ public class Bibliotheque {
 			        }
 			DefaultTableModel model = (DefaultTableModel) table.getModel();
 			model.addRow(new Object[]{"",infoo[0], infoo[1], infoo[2], infoo[3], infoo[4], infoo[5], infoo[6], infoo[7], infoo[8], infoo[9], infoo[10], infoo[11]});
-			        JOptionPane.showMessageDialog(null, filenamee[li]+" a été ajouté avec succès ");
+			        JOptionPane.showMessageDialog(null, filenamee[li]+ labels.getString("Import_status"));
 			}
 		});
 		mnFichier.add(mntmImporter);
+		mnLanguage = new JMenu(labels.getString("Language"));
+		menuBar.add(mnLanguage);
+		lang_en = new JMenuItem(labels.getString("English"));
+		lang_en.addActionListener(new java.awt.event.ActionListener() {
+	    	   	public void actionPerformed(ActionEvent evt) {
+	    	   		Locale currentLocale1 =  new Locale.Builder().setLanguage("en")
+	    	                .setRegion("EN").build();
+	    	    	currentLocale = currentLocale1;
+	    	    	initialize();
+				}
+			});
+		mnLanguage.add(lang_en);
+		lang_fr = new JMenuItem(labels.getString("French"));
+		lang_fr.addActionListener(new java.awt.event.ActionListener() {
+    	   	public void actionPerformed(ActionEvent evt) {
+    	   		Locale currentLocale1 =  new Locale.Builder().setLanguage("fr")
+    	                .setRegion("FR").build();
+    	    	currentLocale = currentLocale1;
+    	    	initialize();
+			}
+		});
+		mnLanguage.add(lang_fr);
 		
-		JMenu mnAbout = new JMenu("About");
+		mnAbout = new JMenu(labels.getString("About"));
 		menuBar.add(mnAbout);
 		
 		JCheckBoxMenuItem chckbxmntmByInsaCvl = new JCheckBoxMenuItem("By INSA CVL 2017 COPYRIGHT");
 		mnAbout.add(chckbxmntmByInsaCvl);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Livres similaires:");
+		JLabel lblNewLabel = new JLabel(labels.getString("Similar_book"));
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 25));
 		lblNewLabel.setBounds(10, 583, 202, 58);
 		frame.getContentPane().add(lblNewLabel);
@@ -263,7 +299,7 @@ public class Bibliotheque {
 		textPane.setBounds(222, 583, 1032, 67);
 		frame.getContentPane().add(textPane);
 		
-		JButton btnChercher = new JButton("Chercher");
+		JButton btnChercher = new JButton(labels.getString("Search"));
 		btnChercher.setBounds(1175, 0, 89, 23);
 		frame.getContentPane().add(btnChercher);
 		
@@ -278,22 +314,17 @@ public class Bibliotheque {
 		
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent evt) {
-				
-				if(evt.isPopupTrigger())  {
-                    JTable source = (JTable)evt.getSource();
-                 li = source.rowAtPoint( evt.getPoint() );
+		@Override
+		public void mouseReleased(MouseEvent evt) {
+			if(evt.isPopupTrigger())  {
+                JTable source = (JTable)evt.getSource();
+                li = source.rowAtPoint( evt.getPoint() );
                 System.out.println(li);
 
-jPopupMenu1.show(evt.getComponent(),evt.getX(),evt.getY());
+        jPopupMenu1.show(evt.getComponent(),evt.getX(),evt.getY());
 
-}
-				
-				
-				
-				
 			}
+		}
 		});
 		
 		
@@ -302,7 +333,11 @@ jPopupMenu1.show(evt.getComponent(),evt.getX(),evt.getY());
 			new Object[][] {
 			},
 			new String[] {
-				"Collection", "Auteur", "Titre", "Journal", "Ann\u00E9e", "Volume", "Nombre", "Pages", "Mois", "Doi", "URL", "R\u00E9sum\u00E9", "Mots cl\u00E9s", "TAGS"
+				labels.getString("Collection"), labels.getString("Author"),
+				labels.getString("Title"),labels.getString("Journal"), 
+				labels.getString("Year"), labels.getString("Volume"), 
+				labels.getString("Number"), labels.getString("Month"), 
+				labels.getString("Resume"), labels.getString("Keywords"), labels.getString("Tags")
 			}
 		) {
 			Class[] columnTypes = new Class[] {
@@ -313,5 +348,6 @@ jPopupMenu1.show(evt.getComponent(),evt.getX(),evt.getY());
 			}
 		});
 		scrollPane.setViewportView(table);
+		frame.validate();
 	}
 }

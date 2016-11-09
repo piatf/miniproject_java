@@ -8,9 +8,10 @@
  *
  * @author hamza
  */
+package bibliotheque;
+
 import java.io.*;
 import java.util.Scanner;
-
 
 public class Parser {
                           String[] info = new String [12]; 
