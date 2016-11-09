@@ -18,37 +18,38 @@
 			if(returnVal == JFileChooser.APPROVE_OPTION) { // if the file can be opened
 				// To copy a file from source to dest
 				File source = new File(chooser.getSelectedFile().getPath(););
-				File dest = new File("C:\\");
+				String dest = "//PDF";
 				try {
-					FileUtils.copyFile(source, dest); // better using copyFileToDirectory
-					// copy filename + key for unique name in unique directory.
+					FileUtils.copyFileToDirectory(source, dest);
 				} catch (NullPointerException e) {
 					if (dest == null) {
-						// create the directory? createDirectory from Files class
+						File theDir = new File("PDF");
+						theDir.createDirectory(currentDir);
+						FileUtils.copyFileToDirectory(source, dest);
 					}
-					// then do it again
 				} catch (IOException e) {
 					e.printStackTrace();
+					return -1;
 				}
-				return chooser.getSelectedFile().getPath(); // return the File Path
+				String name = getName(chooser);
+				//return chooser.getSelectedFile().getPath();
+				return (dest + "/" + name);
 			}	
 		}
 		
 		public ReadPDF(String PathPDF) {
-			JFileChooser chooser = new JFileChooser(PathPDF); // Create a JFileChooser
-			
-			int returnVal = chooser.showOpenDialog(parent); // in response to a button click
-			
-			if(returnVal == JFileChooser.APPROVE_OPTION) {
-				System.out.println("You chose to open this file: " + chooser.getSelectedFile().getName());
-			}
-			if (Desktop.isDesktopSupported()) { // open PDF File
-				try {
-					File myFile = new File(PathPDF);
-					Desktop.getDesktop().open(myFile);
-				} catch (IOException ex) {
-					// no application registered for PDFs
+			try { 
+				File myFile = new File(PathPDF);
+				if (Desktop.isDesktopSupported()) { // open PDF File
+					try {
+						Desktop.getDesktop().open(myFile);
+					} catch (IOException e) {
+						// no application registered for PDFs
+					}
 				}
+			}
+			catch (IOException e){
+				//Can't open File
 			}
 		}
 	}
