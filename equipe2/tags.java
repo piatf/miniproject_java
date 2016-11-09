@@ -17,19 +17,19 @@ public class tags{
 		tags = new Hashtable<Integer, ArrayList<String>>(); 
 	}
 	
-	void addTag(String t, int id)
+	private void addTag(String t, int id)
 	{
 		tags.get(id).add(t);
 		// TODO: add the input in the XML file
 	}
 	
-	void clear(int id)
+	private void clear(int id)
 	{
 		tags.get(id).clear();
 		// TODO: remove the tags associated to the XML document
 	}
 	
-	void refreshTags(String input, int id)
+	public void refreshTags(String input, int id)
 	{
 		String[] alltags;
 		
@@ -45,10 +45,11 @@ public class tags{
 		// for each : addtag
 	}
 
-	int[] Booksearch(String search)
+	public ArrayList<Integer> Booksearch(String search)
 	{
-		int[] books_affected;
-		int id, i = 0;
+		ArrayList<Integer> books_affected;
+		books_affected = new ArrayList<Integer>();
+		int id;
 	    Set<Integer> IDs = tags.keySet();
 	    //Obtaining iterator over set entries
 	    Iterator<Integer> itr = IDs.iterator();
@@ -57,10 +58,7 @@ public class tags{
 	    {
 	       id = itr.next();
 	       if(tags.get(id).contains(search))
-	       {
-	    	   books_affected[i]=id;
-	    	   i++;
-	       }
+	    	   books_affected.add(id);
 	    } 
 		return books_affected;
 	}
