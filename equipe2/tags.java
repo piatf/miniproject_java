@@ -58,6 +58,8 @@ public class tags{
 	 * @param id
 	 * 		ID of the article.
 	 * @see tags#addTag(String, int)
+	 * @see tags#clear(int)
+	 * 
 	 */
 	void refreshTags(String input, int id)
 	{
