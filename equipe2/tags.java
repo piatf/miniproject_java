@@ -17,7 +17,7 @@ import java.util.Iterator;
 
 public class tags{ 
 	
-	Hashtable<Integer, ArrayList<String>> tags; 
+	private Hashtable<Integer, ArrayList<String>> tags; 
 	
 	/**
 	 * Constructor. It will be called during the initialisation, in the main class.
