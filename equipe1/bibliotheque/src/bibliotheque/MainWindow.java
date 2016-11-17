@@ -17,6 +17,8 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -30,8 +32,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SpringLayout;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+
+import recherche.*;
 
 /**
  *
@@ -43,8 +49,8 @@ public class MainWindow extends javax.swing.JFrame {
      * Creates new form MainWindow
      */
     public MainWindow() {
+    	similar_books = new Hashtable<Integer, String[]>();
 		currentLocale = Locale.getDefault();
-
         initComponents();
     }
     /**
@@ -71,10 +77,7 @@ public class MainWindow extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -178,6 +181,19 @@ public class MainWindow extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        
+        // Event when we click to a row in table:
+        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
+            	textField2.setText("");
+            	String title_select = (String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn());
+            	int id_found = tag_titre.Booksearch(title_select);
+            	// Display the similar books
+            	for(int i = 0; i < 3 ;i++){
+            		textField2.append(similar_books.get(id_found)[i].toString()+ "\n");
+            	}
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
        
         // TRICK : Add empty gridbaglayout components to scaling the interface, for the vertical line:
@@ -215,31 +231,11 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
-        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem6.setText(labels.getString("Import_PDF"));
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem6);
 
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText(labels.getString("Edit"));
       
-
-        jMenuItem3.setText(labels.getString("Delete_Item"));
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem3);
-
-        jMenuItem4.setText(labels.getString("Delete_Collection"));
-        jMenu2.add(jMenuItem4);
-
         jMenuBar1.add(jMenu2);
 
         jMenu5.setText(labels.getString("About"));
@@ -314,6 +310,25 @@ public class MainWindow extends javax.swing.JFrame {
 		DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 		model.addRow(new Object[]{"",infoo[0], infoo[1], infoo[2], infoo[3], infoo[4], infoo[5], infoo[7], "", infoo[11], "", false});
         JOptionPane.showMessageDialog(null, filenamee[li]+ labels.getString("Import_status"));
+        // adding id to the tags:
+        title_id.addTag(infoo[1], id);
+        
+        
+        
+        // Search for the similar books:
+        String info_titre = infoo[1];
+        // Create a requete
+        Requete newRequest = new Requete();
+        
+        // 3 String arrays used to get each title and date of suggested article:
+        String afficheResult[] = new String[3];
+        // get suggested article:
+        afficheResult = newRequest.finalResult(info_titre);
+        // ADdd these 3 articles to the hashTable to display later:
+        similar_books.put(id, afficheResult);
+        // Increment the id :
+        id++;
+
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
@@ -432,10 +447,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
 
@@ -456,6 +468,10 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPopupMenu jPopupMenu1;
     static String []filename1= new String[300];
 	static String []filenamee= new String[300];
+	private Hashtable<Integer, String[]> similar_books;
+	private title_id tag_titre = new title_id();
+	private int id = 1;
+
 	int li=0;
 	
 }
