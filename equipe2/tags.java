@@ -15,7 +15,7 @@ import java.util.Iterator;
  *  @author Francois PIAT 
  *  */
 
-public class tags{ 
+public class tags{
 	
 	private Hashtable<Integer, ArrayList<String>> tags; 
 	
@@ -38,7 +38,6 @@ public class tags{
 	private void addTag(String t, int id)
 	{
 		tags.get(id).add(t);
-		// TODO: add the input in the XML file
 	}
 	
 	/**
@@ -49,7 +48,7 @@ public class tags{
 	private void clear(int id)
 	{
 		tags.get(id).clear();
-		// TODO: remove the tags associated to the XML document
+		// TODO: remove the tags associated to the XML document removealltagsfromXML(int)
 	}
 	
 	
@@ -75,7 +74,10 @@ public class tags{
 		// split string input
 		alltags = input.split(";|\\s+"); //admits that tags is separated 
 										 //by either white spaces or ";"
-	
+		
+		// XML.setTag(alltags, id);
+		
+		
 		// clear tags for the IDbook
 		clear(id);
 		
