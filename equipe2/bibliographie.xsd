@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsd:schema elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:element name="BibliographieXML">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="CollectionXML" minOccurs="1" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="EleXML" minOccurs="0" maxOccurs="unbounded">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="author" type="xsd:string"/>
+										<xsd:element name="title" type="xsd:string"/>
+										<xsd:element name="journal" type="xsd:string"/>
+										<xsd:element name="year" type="xsd:string"/>
+										<xsd:element name="volume" type="xsd:string" minOccurs="0"/>
+										<xsd:element name="number" type="xsd:string" minOccurs="0"/>
+										<xsd:element name="month" type="xsd:string" minOccurs="0"/>
+										<xsd:element name="pages" type="xsd:string" minOccurs="0"/>
+										<xsd:element name="doi" type="xsd:string" minOccurs="0"/>
+										<xsd:element name="url" type="xsd:string" minOccurs="0"/>
+										<xsd:element name="keywords" type="xsd:string" minOccurs="0"/>
+										<xsd:element name="abstract" type="xsd:string" minOccurs="0"/>
+										<xsd:element name="pdf" type="xsd:string" minOccurs="0"/>
+										<xsd:element name="tag" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+									</xsd:sequence>
+									<xsd:attribute name="id" type="xsd:integer" use="required" />
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+						<xsd:attribute name="name" type="xsd:string" use="required" />
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
