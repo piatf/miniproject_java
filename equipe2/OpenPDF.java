@@ -15,8 +15,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  * Class to Save/Load PDF from explorer into a variable and Read PDF from Path
  * 
- * 
- * @author Gaëtan COULHON
+ * @author Gaetan COULHON
 */
 public class OpenPDF {
 	/**
@@ -24,6 +23,9 @@ public class OpenPDF {
 	 * Copy it into the directory PDF inside the project.
 	 * 
 	 * @return the String corresponding to the full name of the PDF.
+	 * 
+	 * @throws IOException 
+	 * 			Throws an error if there is an input/output error.
 	 */
 	public String SearchPDF() throws IOException {
 		
