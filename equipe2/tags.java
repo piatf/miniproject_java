@@ -20,14 +20,6 @@ public class tags{
 	private Hashtable<Integer, ArrayList<String>> tags; 
 	
 	/**
-	 * Constructor. It will be called during the initialisation, in the main class.
-	 */
-	tags() //constructor of tag list
-	{
-		tags = new Hashtable<Integer, ArrayList<String>>(); 
-	}
-	
-	/**
 	 * Associates the tag to the article.
 	 * @param t 
 	 * 		The input tag. Added to the list.
@@ -52,6 +44,14 @@ public class tags{
 	}
 	
 	/**
+	 * Tags constructor.
+	 */
+	tags() 
+	{
+		tags = new Hashtable<Integer, ArrayList<String>>(); 
+	}
+	
+	/**
 	 * Refreshes the list of tags associated to the   article.
 	 * @param input
 	 * 		Input raw string, which contains every tag, separated by white spaces or semi-colons.
@@ -61,6 +61,11 @@ public class tags{
 	 * @see tags#clear(int)
 	 * 
 	 */
+	
+	/**
+	 * Constructor. It will be called during the initialisation, in the main class.
+	 */
+
 	void refreshTags(String input, int id)
 	{
 		String[] alltags;
