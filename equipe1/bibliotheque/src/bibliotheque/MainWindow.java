@@ -27,10 +27,12 @@ import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -50,7 +52,9 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow() {
     	similar_books = new Hashtable<Integer, String[]>();
+    	content = new Hashtable<Integer, ArrayList<String>>();
 		currentLocale = Locale.getDefault();
+		collection = new String[100];
         initComponents();
     }
     /**
@@ -83,6 +87,7 @@ public class MainWindow extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -186,7 +191,7 @@ public class MainWindow extends javax.swing.JFrame {
         jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             public void valueChanged(ListSelectionEvent event) {
             	textField2.setText("");
-            	String title_select = (String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn());
+            	String title_select = (String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 2);
             	int id_found = tag_titre.Booksearch(title_select);
             	// Display the similar books
             	for(int i = 0; i < 3 ;i++){
@@ -235,7 +240,15 @@ public class MainWindow extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText(labels.getString("Edit"));
-      
+        
+        jMenuItem3.setText(labels.getString("Delete_Collection"));
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem3);
+        
         jMenuBar1.add(jMenu2);
 
         jMenu5.setText(labels.getString("About"));
@@ -277,7 +290,16 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
-  
+    	// Take text from textField2:
+    	String text_search = textField1.getText().toString();
+    	for(int i = 0; i < id; i++) {
+        	String tag_select = (String) jTable1.getModel().getValueAt(i, 10);
+        	int index = tag_select.indexOf(text_search, 0);
+        	//if Can find
+        	if(index >= 0) {
+        	    JOptionPane.showMessageDialog(this, "FOUND THE TAG!", "Mesage",JOptionPane.ERROR_MESSAGE);
+        	}
+    	}
     }//GEN-LAST:event_button1ActionPerformed
 
     private void jMenu1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jMenu1FocusGained
@@ -287,6 +309,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
+   
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -313,8 +336,20 @@ public class MainWindow extends javax.swing.JFrame {
         // adding id to the tags:
         title_id.addTag(infoo[1], id);
         
-        
-        
+        ArrayList<String> array_content = new ArrayList<String>();
+        array_content.add("");
+        array_content.add(infoo[0]);
+        array_content.add(infoo[1]);
+        array_content.add(infoo[2]);
+        array_content.add(infoo[3]);
+        array_content.add(infoo[4]);
+        array_content.add(infoo[5]);
+        array_content.add(infoo[7]);
+        array_content.add("");
+        array_content.add(infoo[11]);
+        array_content.add("");
+
+        content.put(id, array_content);
         // Search for the similar books:
         String info_titre = infoo[1];
         // Create a requete
@@ -447,10 +482,10 @@ public class MainWindow extends javax.swing.JFrame {
 
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private java.awt.Label label1;
@@ -470,8 +505,9 @@ public class MainWindow extends javax.swing.JFrame {
 	static String []filenamee= new String[300];
 	private Hashtable<Integer, String[]> similar_books;
 	private title_id tag_titre = new title_id();
-	private int id = 1;
-
+	private int id = 0;
+	private String collection[];
+	private Hashtable<Integer, ArrayList<String>> content;
 	int li=0;
 	
 }
