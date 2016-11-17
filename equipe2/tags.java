@@ -44,7 +44,7 @@ public class tags{
 	}
 	
 	/**
-	 * Tags constructor..
+	 * Tags constructor.
 	 */
 	tags() 
 	{
