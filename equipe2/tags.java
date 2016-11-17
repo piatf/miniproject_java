@@ -20,12 +20,21 @@ public class tags{
 	private Hashtable<Integer, ArrayList<String>> tags; 
 	
 	/**
+	 * Tags constructor.
+	 */
+	tags() 
+	{
+		tags = new Hashtable<Integer, ArrayList<String>>(); 
+	}
+	
+	/**
 	 * Associates the tag to the article.
 	 * @param t 
 	 * 		The input tag. Added to the list.
 	 * @param id
 	 * 		ID of the article.
 	 */
+	
 	private void addTag(String t, int id)
 	{
 		tags.get(id).add(t);
@@ -43,13 +52,6 @@ public class tags{
 		// TODO: remove the tags associated to the XML document
 	}
 	
-	/**
-	 * Tags constructor.
-	 */
-	tags() 
-	{
-		tags = new Hashtable<Integer, ArrayList<String>>(); 
-	}
 	
 	/**
 	 * Refreshes the list of tags associated to the   article.
