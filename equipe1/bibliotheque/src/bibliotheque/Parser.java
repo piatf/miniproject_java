@@ -1,3 +1,4 @@
+package bibliotheque;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,10 +9,9 @@
  *
  * @author hamza
  */
-package bibliotheque;
-
 import java.io.*;
 import java.util.Scanner;
+
 
 public class Parser {
                           String[] info = new String [12]; 
