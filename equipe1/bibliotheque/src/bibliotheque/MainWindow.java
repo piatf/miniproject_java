@@ -12,6 +12,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -26,18 +30,23 @@ import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
+import javax.swing.CellEditor;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.JTextComponent;
 
 import recherche.*;
 
@@ -194,11 +203,45 @@ public class MainWindow extends javax.swing.JFrame {
             	String title_select = (String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 2);
             	int id_found = tag_titre.Booksearch(title_select);
             	// Display the similar books
-            	for(int i = 0; i < 3 ;i++){
+            /*	for(int i = 0; i < 3 ;i++){
             		textField2.append(similar_books.get(id_found)[i].toString()+ "\n");
-            	}
+            	}*/
             }
         });
+        // Save the collection data after user hit enter:
+        jTable1.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				if(arg0.getKeyCode() == KeyEvent.VK_ENTER){
+					
+					String title_select = (String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 2);
+	            	int id_found = tag_titre.Booksearch(title_select);
+	            	// Save the data from it:
+	            	ArrayList<String> content_temp = content.get(id_found);
+	            	content.remove(id_found);
+	            	content_temp.set(0, (String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0));
+	            	content_temp.set(13, (String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 10));
+	            	content.put(id_found, content_temp);
+				}
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+        	
+        });
+     
+        // Event when we lost focus a row in the table:
         jScrollPane1.setViewportView(jTable1);
        
         // TRICK : Add empty gridbaglayout components to scaling the interface, for the vertical line:
@@ -309,7 +352,31 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-   
+    	 JTextField textArea = new JTextField();
+         textArea.setEditable(true);
+         JScrollPane scrollPane = new JScrollPane(textArea);
+         scrollPane.requestFocus();
+         textArea.requestFocusInWindow();
+         scrollPane.setPreferredSize(new Dimension(40, 50));
+         JOptionPane.showMessageDialog(this, scrollPane,
+                 "Type which collection you want to remove", JOptionPane.PLAIN_MESSAGE);
+         int number_row_removed = 0;
+         String info = textArea.getText();
+         // Remove selection mode:
+
+         for(int i = id -1; i >=0; i--) {
+         	String collection = (String) jTable1.getModel().getValueAt(i, 0);
+         	if(collection.equals(info)) {
+         		System.out.println(i);
+         		// Remove the data in jTable
+         		((DefaultTableModel) jTable1.getModel()).removeRow(i);
+         		// Remove the data in the content ( to remove in XML)
+         		content.remove(i);
+         		number_row_removed ++;
+     		}
+ 		}
+        id -= number_row_removed; 
+         // Search all the data in the content 
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -337,17 +404,21 @@ public class MainWindow extends javax.swing.JFrame {
         title_id.addTag(infoo[1], id);
         
         ArrayList<String> array_content = new ArrayList<String>();
-        array_content.add("");
-        array_content.add(infoo[0]);
-        array_content.add(infoo[1]);
-        array_content.add(infoo[2]);
-        array_content.add(infoo[3]);
-        array_content.add(infoo[4]);
-        array_content.add(infoo[5]);
-        array_content.add(infoo[7]);
-        array_content.add("");
-        array_content.add(infoo[11]);
-        array_content.add("");
+        array_content.add(""); // Collection
+        array_content.add(infoo[0]); // Author
+        array_content.add(infoo[1]); // Title
+        array_content.add(infoo[2]); //journal
+        array_content.add(infoo[3]); // year
+        array_content.add(infoo[4]); //volume
+        array_content.add(infoo[5]); // number
+        array_content.add(infoo[6]);  // pages
+        array_content.add(infoo[7]); // month
+        array_content.add(infoo[8]); // doi
+        array_content.add(infoo[9]); //url
+        array_content.add(infoo[10]); //Abstract
+        array_content.add(infoo[11]); // keywords
+        //array_content.add(infoo[12]); //pdf
+        array_content.add(""); //tag
 
         content.put(id, array_content);
         // Search for the similar books:
