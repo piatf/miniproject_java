@@ -27,7 +27,7 @@ public class Partie3 {
     	//Get suggested articles
     	afficheResult=myRequest.finalResult(titreBase);
     	//Show these 3 articles
-    	for(int i=0;i<3;i++){
+    	for(int i=0;i<afficheResult.length;i++){
         	System.out.println(afficheResult[i]);
     	}
     	//Get number of citation from the following author

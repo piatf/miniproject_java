@@ -1,48 +1,25 @@
-import java.io.*;
-import java.util.Scanner;
+package bibliotheque;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 /**
- * 
- * <b>Parser est la classe qui va s'occuper de traiter les fichiers BIBTEX pour en extraire les informations voulues.</b>
- * <p>
- * Un ficher BIBTEX contient les informations suivantes :
- * <ul>
- * <li>les auteurs.</li>
- * <li>Le titre.</li>
- * <li>Le journal.</li>
- * <li>l'ann\u00E9e.</li>
- * <li>Le volume.</li>
- * <li>Nombre.</li>
- * <li>les pages.</li>
- * <li>Mois.</li>
- * <li>URL.</li>
- * <li>mots cl\u00E9s.</li>
- * <li>R\u00E9sum\u00E9.</li>
- * </ul>
- * 
- * </p>
- * 
  *
  * @author hamza
  */
-
+import java.io.*;
+import java.util.Scanner;
 
 
 public class Parser {
-	
                           String[] info = new String [12]; 
 
     
    
-                          /**
-                           * Constructeur parser.
-                           * 
-                           * @param path
-                           * Un parametre qui contient le chemin vers le fichier BIBTEX  
-                           * @throws FileNotFoundException  Si jamais y a un probl\u00E8me avec le path.
-                           */
+    
     public Parser( String path) throws FileNotFoundException{
-    	
                  Scanner s = null;
              String delims = "[,{}=\\-\"]+";
            String[] tokens = new String [10000];
@@ -61,32 +38,22 @@ public class Parser {
                       String abstracts = new String (); 
 
 
-                    
 String cont = new String();
-/**
- * Lecture du fichier BIBTEX.
- * On le met ensuite dans un une variable String.
- * On s\u00E9pare chaque deux mots avec une virgule
- * Car on va utiliser cette condition après dans le d\u00E9liminteur. 
- */
         try {
             s = new Scanner(new BufferedReader(new FileReader(path)));
 
             while (s.hasNext()) {
                 //System.out.println(s.next());
-                
+                //s.useDelimiter("\\s*,\\s*");
                  String nextToken = s.next();
                  cont =cont +","+ nextToken;
-          
+           /*        tokens = nextToken.split(delims);
+           for (int i = 0; i < tokens.length; i++){ 
+     System.out.println(tokens.length);      
+              */
 }     
-            /**
-             * Utilisation du d\u00E9liminteur. 
-             */
+
     tokens = cont.split(delims);
-    
-    /**
-     * La boucle pour mettre chaque information(auteur,titre,..) dans sa place. 
-     */
            for (int i = 0; i < tokens.length; i++){ 
                if (tokens[i].equals("author")){
                    
@@ -193,9 +160,7 @@ String cont = new String();
                    }while(((i+1)<tokens.length-1)&&(!(tokens[i+1].equals("author")))&&(!(tokens[i+1].equals("title")))&&(!(tokens[i+1].equals("journal")))&&(!(tokens[i+1].equals("year")))&&(!(tokens[i+1].equals("volume")))&&(!(tokens[i+1].equals("number")))&&(!(tokens[i+1].equals("pages")))&&(!(tokens[i+1].equals("month")))&&(!(tokens[i+1].equals("doi")))&&(!(tokens[i+1].equals("url")))&&(!(tokens[i+1].equals("abstract"))));
                    }
                
-                /**
-                 * Des lectures pour tester le bon fonctionnement du code.
-                 */    
+                   
                    
                   /* if (nextToken.equalsIgnoreCase("title"))  
             {  s.useDelimiter("\\s*= \\s*");
@@ -205,11 +170,6 @@ String cont = new String();
                              
            // System.out.println(author);
 
-           /**
-            * Ce tableau info comme l'indique son nom contient les 12 informations essentielles
-            * dont nous avons besoin.
-            * à la fin de la boucle au-dessus, les infromations sont stock\u00E9es dans ce tableau.  
-            */
 info[0]=author;
                      info[1]= title ; 
                      info[2]= journal; 
@@ -232,28 +192,17 @@ info[0]=author;
         }
     }
     
-    
-    /**
-     * Retourne le tableau info.
-     * 
-     * @return Retourne le tableau info.
-     */
      public  String[] getinfo(){
         return info;
     }
     
-     /**
-      * Pour tester le fonctionnement de la classe.
-      * Bien sur quand la classe a \u00E9t\u00E9 int\u00E9gr\u00E9 dans le projet avec la classe Bibliotheque
-      * on avait plus besoin du main  
-      * 
-      *          
-      * 
-      */
     public static void main(String[] args) throws IOException {
          //   String path;
+          //   Bibliotheque bib = new Bibliotheque.jMenuItem2ActionPerformed();
     //    path = "book\\BIBTeX (2).bib";
+      //String g = new String getinfo();
                  
+      //path=getinfo();
 
          //    Parser parser = new Parser(path);
 

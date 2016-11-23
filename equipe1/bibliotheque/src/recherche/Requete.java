@@ -30,7 +30,8 @@ public class Requete {
 		//List of all final suggested articles get from the research (with all key words) : length=nbResutat*nbMotCles(for one title of article)
     	ArrayList<String> Articles = new ArrayList<String>();
     	ArrayList<String> Dates = new ArrayList<String>();
-    	
+    	//Number of days reminding before the next authorization for requests
+    	String jourLimite = new String();
     	/**
     	 * Open request needed to get information from the API
     	 * no parameters
@@ -73,7 +74,7 @@ public class Requete {
 	            //Add the subscription key needed to get answer
 	            URI uri = builder.build();
 	            HttpGet request = new HttpGet(uri);
-	            request.setHeader("Ocp-Apim-Subscription-Key", "ad414d4b6898463a8d9de601baf12e01");
+	            request.setHeader("Ocp-Apim-Subscription-Key", "480e3c799b4942b387511f9f510e713c");
 
 
 	            // Request body
@@ -82,11 +83,18 @@ public class Requete {
 	            HttpResponse response = httpclient.execute(request);
 	            HttpEntity entity = response.getEntity();
 	            this.resultat=EntityUtils.toString(entity);
+	            //Test if the subscription key is still working
+	            if (this.resultat.toLowerCase().contains("Out of call volume quota".toLowerCase()))
+	            {
+	            	this.jourLimite = this.resultat.substring(this.resultat.indexOf("in ")+3,this.resultat.indexOf("in ")+5);
+	            	this.resultat="Votre clé de souscription ne permet plus de requêtes. Essayer de nouveau dans " + this.jourLimite + " jours.";
+	            }
 	            //use it for watch the answer from the API
 	            /*if (entity != null) 
 	            {
-	                System.out.println(this.resultat+"fin");
+	                System.out.println(this.resultat);
 	            }*/
+
 	        }
 	        catch (Exception e)
 	        {
@@ -191,31 +199,39 @@ public class Requete {
 		 * 		title of the article that we want suggestions from
 		 */
 		    void getEnsembleArticles(String titreBase){
-		    	
-		    	Requete myRequest = new Requete();
-		    	StructureMotCle struct = new StructureMotCle();
-		    	//Get forbidden word from the user list
-		    	struct.ouvrirTxt();
-				myRequest.nbResultat=3;
-		    	String stringMotClePrincipale = new String();
-		    	String[] ListeMotClePrincipale = null;
-		    	stringMotClePrincipale=struct.decouperTitre(titreBase);
-		    	ListeMotClePrincipale=struct.separationString(stringMotClePrincipale);
-		    	for(int i=0;i<ListeMotClePrincipale.length;i++)
+		    	try
 		    	{
-		        	myRequest.query=ListeMotClePrincipale[i];
-		        	//get response from the search API
-		        	myRequest.getResultat();
-		        	myRequest.getInfoArticle();
-		        	for(int j=0;j<myRequest.nbResultat;j++)
-		        	{
-		        		//add articles and date suggested for each key words
-		            	Articles.add(myRequest.ListeNomArticle[j]);
-		            	Dates.add(myRequest.ListeDate[j]);
-		        	}
+		    		Requete myRequest = new Requete();
+			    	StructureMotCle struct = new StructureMotCle();
+			    	//Get forbidden word from the user list
+			    	struct.ouvrirTxt();
+					myRequest.nbResultat=3;
+			    	String stringMotClePrincipale = new String();
+			    	String[] ListeMotClePrincipale = null;
+			    	stringMotClePrincipale=struct.decouperTitre(titreBase);
+			    	ListeMotClePrincipale=struct.separationString(stringMotClePrincipale);
+			    	for(int i=0;i<ListeMotClePrincipale.length;i++)
+			    	{
+			        	myRequest.query=ListeMotClePrincipale[i];
+			        	//get response from the search API
+			        	myRequest.getResultat();
+			        	myRequest.getInfoArticle();
+			        	for(int j=0;j<myRequest.nbResultat;j++)
+			        	{
+			        		//add articles and date suggested for each key words
+			            	Articles.add(myRequest.ListeNomArticle[j]);
+			            	Dates.add(myRequest.ListeDate[j]);
+			        	}
+			    	}
 		    	}
+		    	//In case of the subscription key is not up to date
+		        catch(Exception e){
+		        	this.jourLimite = this.resultat.substring(this.resultat.indexOf("in ")+3,this.resultat.indexOf("in ")+5);
+	            	this.resultat="Votre clé de souscription ne permet plus de requêtes. Essayer de nouveau dans " + this.jourLimite + " jours.";
+		        	System.out.println(this.resultat);
+		        }
+	            	
 		    }
-		    
 		    /**
 			 * Find the 3 most interesting articles from the previous list
 			 * @param titreBase
@@ -224,34 +240,45 @@ public class Requete {
 			 */
 		public String[] finalResult(String titreBase)
 		{
-			//Array of 3 final suggested articles
-			String result[]=new String[3];
-			StructureMotCle struct = new StructureMotCle();
-	    	Pertinence calcul = new Pertinence();
-	    	Requete myRequest = new Requete();
-	    	//Get all key words from the title in parameters
-	    	String MotsClesDepart = struct.decouperTitre(titreBase);
-	    	//Set all key words in a ArrayList
-	    	ArrayList<String> ListeMotClesDepart = struct.separationListe(MotsClesDepart);
-	    	//Get all articles from all key words
-	    	myRequest.getEnsembleArticles(titreBase);
-	    	ArrayList<String> ArticlesSuggeres = myRequest.Articles;
-	    	ArrayList<String> DatesSuggeres = myRequest.Dates;
-	    	ArrayList<String> MotsClesAssocies = new ArrayList<> ();
-	    	//Create a list with all key words from all title of articles from the list of key word associated with the initial title
-	    	for(int i=0;i<ArticlesSuggeres.size();i++)
-	    	{
-	    		MotsClesAssocies.add(struct.decouperTitre(ArticlesSuggeres.get(i)));
-	    	}
-	    	//Array of the 3 indices of most pertinent articles
-	    	int indiceArticle[]=new int[3];
-	    	//Get 3 indices 
-	    	indiceArticle=calcul.getIndicePertinent(ListeMotClesDepart, MotsClesAssocies);
-	    	//Get 3 most pertinent articles
-	    	for(int i=0;i<3;i++){
-	    		result[i]='"'+ArticlesSuggeres.get(indiceArticle[i])+'"' + "\tDate de publication : " + DatesSuggeres.get(indiceArticle[i]);
-	    	}
-	    	//return array of the 3 most pertinent articles 
-	    	return result;
+		    	try
+		    	{
+	            	//Array of 3 final suggested articles
+					String result[]=new String[3];
+					StructureMotCle struct = new StructureMotCle();
+			    	Pertinence calcul = new Pertinence();
+			    	Requete myRequest = new Requete();
+			    	//Get all key words from the title in parameters
+			    	String MotsClesDepart = struct.decouperTitre(titreBase);
+			    	//Set all key words in a ArrayList
+			    	ArrayList<String> ListeMotClesDepart = struct.separationListe(MotsClesDepart);
+			    	//Get all articles from all key words
+			    	myRequest.getEnsembleArticles(titreBase);
+			    	ArrayList<String> ArticlesSuggeres = myRequest.Articles;
+			    	ArrayList<String> DatesSuggeres = myRequest.Dates;
+			    	ArrayList<String> MotsClesAssocies = new ArrayList<> ();
+			    	//Create a list with all key words from all title of articles from the list of key word associated with the initial title
+			    	for(int i=0;i<ArticlesSuggeres.size();i++)
+			    	{
+			    		MotsClesAssocies.add(struct.decouperTitre(ArticlesSuggeres.get(i)));
+			    	}
+			    	//Array of the 3 indices of most pertinent articles
+			    	int indiceArticle[]=new int[3];
+			    	//Get 3 indices 
+			    	indiceArticle=calcul.getIndicePertinent(ListeMotClesDepart, MotsClesAssocies);
+			    	//Get 3 most pertinent articles
+			    	for(int i=0;i<3;i++){
+			    		result[i]='"'+ArticlesSuggeres.get(indiceArticle[i])+'"' + "\tDate de publication : " + DatesSuggeres.get(indiceArticle[i]);
+			    	}
+			    	//return array of the 3 most pertinent articles 
+			    	return result;
+		    	}
+		    	//In case of the subscription key is not up to date
+		        catch(Exception e){
+		        	String result[]=new String[1];
+		        	result[0]=this.resultat;
+	            	System.out.println(this.resultat);
+	            	//return only a message with number of days the user have to wait before the next request
+		        	return result;
+		        }
 		}
 	}

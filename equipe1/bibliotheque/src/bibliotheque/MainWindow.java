@@ -40,12 +40,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.SpringLayout;
 import javax.swing.event.ChangeEvent;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import javax.swing.text.JTextComponent;
 
 import recherche.*;
@@ -83,10 +87,16 @@ public class MainWindow extends javax.swing.JFrame {
 
         button1 = new java.awt.Button();
         label1 = new java.awt.Label();
-        textField1 = new java.awt.TextField();
+        textField1 = new JTextField();
         textField2 = new java.awt.TextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        MyTableModel model = new MyTableModel(currentLocale);
+
+        sorter = new TableRowSorter<MyTableModel>(model);
+        jTable1 = new JTable(model);
+        jTable1.setRowSorter(sorter);
+        //jTable1.setFillsViewportHeight(true);
+
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -172,38 +182,16 @@ public class MainWindow extends javax.swing.JFrame {
     			}
     		}
     		});
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-            },
-            new String [] {
-            		labels.getString("Collection"), labels.getString("Author"), 
-            		labels.getString("Title"), labels.getString("Journal"),
-            		labels.getString("Year"), labels.getString("Volume"),
-            		labels.getString("Number"), labels.getString("Month"), 
-            		labels.getString("Resume"), labels.getString("Keywords"), 
-            		labels.getString("Tags"), "PDF" 
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class,
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, 
-                java.lang.String.class, java.lang.String.class, java.lang.String.class,
-                java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        
         
         // Event when we click to a row in table:
         jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             public void valueChanged(ListSelectionEvent event) {
             	textField2.setText("");
-            	String title_select = (String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 2);
+            	/*String title_select = (String) jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 2);
             	int id_found = tag_titre.Booksearch(title_select);
             	// Display the similar books
-            /*	for(int i = 0; i < 3 ;i++){
+            	for(int i = 0; i < 3 ;i++){
             		textField2.append(similar_books.get(id_found)[i].toString()+ "\n");
             	}*/
             }
@@ -240,7 +228,18 @@ public class MainWindow extends javax.swing.JFrame {
 			}
         	
         });
-     
+        textField1.getDocument().addDocumentListener(
+                new DocumentListener() {
+                    public void changedUpdate(DocumentEvent e) {
+                        newFilter();
+                    }
+                    public void insertUpdate(DocumentEvent e) {
+                        newFilter();
+                    }
+                    public void removeUpdate(DocumentEvent e) {
+                        newFilter();
+                    }
+                });
         // Event when we lost focus a row in the table:
         jScrollPane1.setViewportView(jTable1);
        
@@ -334,17 +333,10 @@ public class MainWindow extends javax.swing.JFrame {
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
     	// Take text from textField2:
-    	String text_search = textField1.getText().toString();
-    	for(int i = 0; i < id; i++) {
-        	String tag_select = (String) jTable1.getModel().getValueAt(i, 10);
-        	int index = tag_select.indexOf(text_search, 0);
-        	//if Can find
-        	if(index >= 0) {
-        	    JOptionPane.showMessageDialog(this, "FOUND THE TAG!", "Mesage",JOptionPane.ERROR_MESSAGE);
-        	}
-    	}
+    	newFilter();
     }//GEN-LAST:event_button1ActionPerformed
-
+    
+    
     private void jMenu1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jMenu1FocusGained
         // TODO add your handling code here:
     	
@@ -359,7 +351,7 @@ public class MainWindow extends javax.swing.JFrame {
          textArea.requestFocusInWindow();
          scrollPane.setPreferredSize(new Dimension(40, 50));
          JOptionPane.showMessageDialog(this, scrollPane,
-                 "Type which collection you want to remove", JOptionPane.PLAIN_MESSAGE);
+                 labels.getString("Message_Search"), JOptionPane.PLAIN_MESSAGE);
          int number_row_removed = 0;
          String info = textArea.getText();
          // Remove selection mode:
@@ -367,9 +359,9 @@ public class MainWindow extends javax.swing.JFrame {
          for(int i = id -1; i >=0; i--) {
          	String collection = (String) jTable1.getModel().getValueAt(i, 0);
          	if(collection.equals(info)) {
-         		System.out.println(i);
          		// Remove the data in jTable
-         		((DefaultTableModel) jTable1.getModel()).removeRow(i);
+        		MyTableModel model = (MyTableModel) jTable1.getModel();
+        		model.removeRow(i);
          		// Remove the data in the content ( to remove in XML)
          		content.remove(i);
          		number_row_removed ++;
@@ -397,9 +389,12 @@ public class MainWindow extends javax.swing.JFrame {
 		        } catch (FileNotFoundException ex) {
 		            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
 		        }
-		DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-		model.addRow(new Object[]{"",infoo[0], infoo[1], infoo[2], infoo[3], infoo[4], infoo[5], infoo[7], "", infoo[11], "", false});
-        JOptionPane.showMessageDialog(null, filenamee[li]+ labels.getString("Import_status"));
+		MyTableModel model = (MyTableModel) jTable1.getModel();
+		model.insertRow(id , new Object[]{"",infoo[0], infoo[1], infoo[2], infoo[3], infoo[4], infoo[5], infoo[7], "", infoo[11], "", false});
+        model.fireTableRowsInserted(0, id );
+
+		//model.addRow(new Object[]{"",infoo[0], infoo[1], infoo[2], infoo[3], infoo[4], infoo[5], infoo[7], "", infoo[11], "", false});
+        //JOptionPane.showMessageDialog(null, filenamee[li]+ labels.getString("Import_status"));
         // adding id to the tags:
         title_id.addTag(infoo[1], id);
         
@@ -424,14 +419,14 @@ public class MainWindow extends javax.swing.JFrame {
         // Search for the similar books:
         String info_titre = infoo[1];
         // Create a requete
-        Requete newRequest = new Requete();
+        /*Requete newRequest = new Requete();
         
         // 3 String arrays used to get each title and date of suggested article:
         String afficheResult[] = new String[3];
         // get suggested article:
         afficheResult = newRequest.finalResult(info_titre);
         // ADdd these 3 articles to the hashTable to display later:
-        similar_books.put(id, afficheResult);
+        similar_books.put(id, afficheResult);*/
         // Increment the id :
         id++;
 
@@ -502,6 +497,22 @@ public class MainWindow extends javax.swing.JFrame {
 		filename1[li]="";
 		JOptionPane.showMessageDialog(null, labels.getString("Delete_element_status"));
 	}
+	
+    /** 
+     * Update the row filter regular expression from the expression in
+     * the text box.
+     */
+    private void newFilter() {
+        RowFilter<MyTableModel, Object> rf = null;
+        //If current expression doesn't parse, don't update.
+        try {
+            rf = RowFilter.regexFilter(textField1.getText(), 10);
+        } catch (java.util.regex.PatternSyntaxException e) {
+            return;
+        }
+        sorter.setRowFilter(rf);
+    }
+
 
     public static void main(String args[]) {
       
@@ -560,10 +571,10 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private java.awt.Label label1;
-    private java.awt.TextField textField1;
+    private JTextField textField1;
     private java.awt.TextArea textField2;
     // End of variables declaration//GEN-END:variables
-    private Locale currentLocale = new Locale.Builder().setLanguage("en").setRegion("EN").build();
+    public Locale currentLocale = new Locale.Builder().setLanguage("en").setRegion("EN").build();
 
     private static ResourceBundle labels;
     
@@ -579,6 +590,8 @@ public class MainWindow extends javax.swing.JFrame {
 	private int id = 0;
 	private String collection[];
 	private Hashtable<Integer, ArrayList<String>> content;
+    private TableRowSorter<MyTableModel> sorter;
+
 	int li=0;
 	
 }
