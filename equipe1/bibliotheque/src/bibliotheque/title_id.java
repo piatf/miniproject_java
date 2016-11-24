@@ -3,7 +3,11 @@ package bibliotheque;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
-
+/**
+ * 
+ * @author NGUYEN TIen Manh, Fraçois Piat
+ *
+ */
 public class title_id {
 private static Hashtable<Integer, String> title_id; 
 	
@@ -22,7 +26,7 @@ private static Hashtable<Integer, String> title_id;
 	 * @param id
 	 * 		ID of the article.
 	 */
-	public static void addTag(String t, int id)
+	public void addTag(String t, int id)
 	{
 		title_id.put(id, t);
 		// TODO: add the input in the XML file

@@ -1,8 +1,5 @@
 package bibliotheque;
 
-import java.awt.List;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Vector;
@@ -10,13 +7,22 @@ import java.util.Vector;
 import javax.swing.table.AbstractTableModel;
 
 
-/* This table model is created in order to use the Sort and Filter function;
+/**
+ *  This table model is created in order to use the Sort and Filter function;
  * With this sort and filter function, we can implement the tag search function easily
+ * Also gives us a flexibility with how we can handle the informations in our table
+ */
+
+/**
+ * @author: Nguyen Tien Manh
  */
 public class MyTableModel extends AbstractTableModel {
-    private  Locale currentLocale = Locale.getDefault();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private  Locale currentLocale = Locale.getDefault();
     private boolean DEBUG = false;
-    private int id;
     private ResourceBundle labels = ResourceBundle.getBundle("resources.Resources", currentLocale); ;
     
     private Vector<Object[]> data = new Vector<Object[]>();

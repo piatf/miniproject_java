@@ -15,14 +15,14 @@ import java.util.Iterator;
  *  @author Francois PIAT 
  *  */
 
-public class tags{ 
+public class tags{
 	
-	private static Hashtable<Integer, ArrayList<String>> tags; 
+	private Hashtable<Integer, ArrayList<String>> tags; 
 	
 	/**
-	 * Constructor. It will be called during the initialisation, in the main class.
+	 * Tags constructor.
 	 */
-	tags() //constructor of tag list
+	tags() 
 	{
 		tags = new Hashtable<Integer, ArrayList<String>>(); 
 	}
@@ -34,10 +34,10 @@ public class tags{
 	 * @param id
 	 * 		ID of the article.
 	 */
-	public static void addTag(String t, int id)
+	
+	private void addTag(String t, int id)
 	{
 		tags.get(id).add(t);
-		// TODO: add the input in the XML file
 	}
 	
 	/**
@@ -45,11 +45,12 @@ public class tags{
 	 * @param id
 	 * 		ID of the article.
 	 */
-	public void clear(int id)
+	private void clear(int id)
 	{
 		tags.get(id).clear();
-		// TODO: remove the tags associated to the XML document
+		// TODO: remove the tags associated to the XML document removealltagsfromXML(int)
 	}
+	
 	
 	/**
 	 * Refreshes the list of tags associated to the   article.
@@ -61,14 +62,22 @@ public class tags{
 	 * @see tags#clear(int)
 	 * 
 	 */
-	public void refreshTags(String input, int id)
+	
+	/**
+	 * Constructor. It will be called during the initialisation, in the main class.
+	 */
+
+	void refreshTags(String input, int id)
 	{
 		String[] alltags;
 		
 		// split string input
 		alltags = input.split(";|\\s+"); //admits that tags is separated 
 										 //by either white spaces or ";"
-	
+		
+		// XML.setTag(alltags, id);
+		
+		
 		// clear tags for the IDbook
 		clear(id);
 		
@@ -84,7 +93,7 @@ public class tags{
 	 * 		Tag written in the research bar to get one (or more) specific article.
 	 * @return A list of IDs referencing articles associated to the tag searched.
 	 */
-	public ArrayList<Integer> Booksearch(String search)
+	ArrayList<Integer> Booksearch(String search)
 	{
 		ArrayList<Integer> books_affected;
 		books_affected = new ArrayList<Integer>();
