@@ -1,0 +1,2 @@
+Ici son repertoriés des fichiers de différents format, mais de même contenus. 
+Avoir plusieurs format permettait de s'assurer de la visibilité du diagramme.
