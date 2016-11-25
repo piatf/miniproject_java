@@ -1,4 +1,0 @@
-#Sysnosis
-
--- init commit(ubuntu)
-
