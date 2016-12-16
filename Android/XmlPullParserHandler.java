@@ -24,11 +24,7 @@ public class XmlPullParserHandler {
         bibliography = new ArrayList<Collection>();
         tags = new ArrayList<String>();
     }
-
-    public List<Collection> getBibliography() {
-        return bibliography;
-    }
-
+    
     public List<Collection> parse(InputStream is) {
         XmlPullParserFactory factory = null;
         XmlPullParser parser = null;
