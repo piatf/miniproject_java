@@ -16,10 +16,17 @@ Similarly to the tags, it is possible to set a collection to one article by doub
 
 Depending on the articles selected, a list of suggestions is proposed at the bottom of the window.
 
+## Android Application  
+
+As this project is developped in JAVA, it has been adapted to an android application. The .apk file will be released by mid-January 2017. 
+
+However, some features are slightly different between JAVA application and Android application. For example, in order to fit the screen display on user device, many headed attributes for each article were removed. The remaining attributes are now ***Title, Author, Year, Pages, Keywords***.
+
 
 ## Requirements
 
 - JAVA >= 8.0
+- Android >= 4.0 (Ice Cream Sandwich)
 
 ## Documentation
 
