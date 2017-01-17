@@ -71,7 +71,6 @@ public class Mainwindow extends AppCompatActivity {
         //finish();
 
 
-
     }
    /* @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
