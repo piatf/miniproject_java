@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow   xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+
+        android:background="@drawable/cell_shapee"
+
+
+        android:id="@+id/attrib_name"
+        android:textStyle="bold"
+        android:maxWidth="60dp"
+        android:layout_width="62dp"
+        android:layout_height="60dp" />
+
+    <TextView
+        android:background="@drawable/cell_shapee"
+
+
+        android:id="@+id/attrib_value"
+    android:gravity="right"
+    android:textStyle="normal"
+        android:maxWidth="60dp"
+        android:layout_height="60dp"
+        android:layout_width="62dp" />
+
+    <TextView
+        android:background="@drawable/cell_shapee"
+
+
+        android:id="@+id/attrib_name2"
+        android:gravity="right"
+        android:textStyle="normal"
+        android:maxWidth="60dp"
+        android:layout_height="60dp"
+        android:layout_width="62dp" />
+    <TextView
+        android:background="@drawable/cell_shapee"
+
+    android:id="@+id/attrib_name3"
+    android:gravity="right"
+    android:textStyle="normal"
+        android:maxWidth="60dp"
+        android:layout_height="60dp"
+        android:layout_width="62dp" />
+
+    <TextView
+        android:background="@drawable/cell_shapee"
+
+        android:id="@+id/attrib_name1"
+        android:gravity="right"
+        android:textStyle="normal"
+        android:layout_height="60dp" />
+
+
+</TableRow>

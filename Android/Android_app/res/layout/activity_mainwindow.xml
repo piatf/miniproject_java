@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/activity_mainwindow">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/attrib_table">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:background="@drawable/cell_shape"
+
+                    android:text=" Title"
+                    android:layout_column="0"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+
+                    android:id="@+id/t1"
+                    android:maxWidth="30dp"
+                    android:layout_width="30dp" />
+
+                <TextView
+                    android:background="@drawable/cell_shape"
+
+                    android:text=" Author"
+                    android:layout_column="0"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    android:maxWidth="30dp"
+                    android:id="@+id/t2"
+                    android:layout_width="30dp" />
+
+                <TextView
+                    android:background="@drawable/cell_shape"
+
+
+                    android:text=" Pages"
+                    android:layout_column="1"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    android:maxWidth="30dp"
+                    android:id="@+id/t4"
+                    android:layout_width="30dp" />
+
+                <TextView
+                    android:background="@drawable/cell_shape"
+
+                    android:text=" Year"
+                    android:layout_column="0"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    android:maxWidth="30dp"
+                    android:id="@+id/t5"
+                    android:layout_width="30dp" />
+
+                <TextView
+                    android:background="@drawable/cell_shape"
+
+                    android:text=" Keywords"
+                    android:layout_column="2"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    android:id="@+id/t3" />
+
+            </TableRow>
+        </TableLayout>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/attrib_table1">
+
+        </TableLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:text="ADD"
+        android:layout_width="wrap_content"
+        android:id="@+id/b_add"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:onClick="OnClick" />
+</RelativeLayout>
