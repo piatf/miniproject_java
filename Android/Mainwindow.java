@@ -19,6 +19,10 @@ import android.widget.TextView;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+/**
+*
+*@author Hamza HAMIDI, François PIAT
+**/
 
 public class Mainwindow extends AppCompatActivity {
     private Button add;
